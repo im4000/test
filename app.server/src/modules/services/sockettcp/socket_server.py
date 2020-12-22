@@ -4,7 +4,10 @@ from socket import (
     SOL_SOCKET, SO_REUSEADDR
 )
 
+from datetime import datetime
+
 from utils.config_manager import ConfigManager
+from commons.constants.colors import Color
 
 from .client_handler import ClientHandler
 
@@ -22,6 +25,8 @@ class SocketServer:
         self.sock_connection = socket(AF_INET, SOCK_STREAM)
         self.sock_connection.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
+        self.__start__()
+
     def __start__(self):
         """ This method creates socket connection
             :params:
@@ -37,6 +42,8 @@ class SocketServer:
             self.config_manager.get().socket_server.LISTEN_CLIENT
         )
 
+        print(str(datetime.now()).split('.')[0] + " => [+] Server is ready to listening")
+
     def run(self):
         """ start server for listening clients
             :params:
@@ -50,3 +57,5 @@ class SocketServer:
             client,
             client_address
         ).start()
+
+        self.run()
